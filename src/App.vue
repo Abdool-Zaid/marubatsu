@@ -10,6 +10,55 @@ function generateRandomColor() {
   return color;
 }
 let MoveSet=[]
+function checkGameState(){
+  let position1 = Math.random()
+      document.querySelector('#position1').innerHTML?position1=document.querySelector('#position1').innerHTML:Math.random()
+  let position2 = Math.random()
+      document.querySelector('#position2').innerHTML?position2=document.querySelector('#position2').innerHTML :Math.random()
+  let position3 = Math.random()
+      document.querySelector('#position3').innerHTML?position3=document.querySelector('#position3').innerHTML :Math.random()
+  let position4 = Math.random()
+      document.querySelector('#position4').innerHTML?position4=document.querySelector('#position4').innerHTML :Math.random()
+  let position5 = Math.random()
+      document.querySelector('#position5').innerHTML?position5=document.querySelector('#position5').innerHTML:Math.random()
+  let position6 = Math.random()
+      document.querySelector('#position6').innerHTML?position6=document.querySelector('#position6').innerHTML:Math.random()
+  let position7 = Math.random()
+      document.querySelector('#position7').innerHTML?position7=document.querySelector('#position7').innerHTML :Math.random()
+  let position8 = Math.random()
+      document.querySelector('#position8').innerHTML?position8=document.querySelector('#position8').innerHTML:Math.random()
+  let position9 = Math.random()
+      document.querySelector('#position9').innerHTML?position9=document.querySelector('#position9').innerHTML:Math.random()
+  if (MoveSet.length==9) {
+    alert('game ended in a draw')
+  } else if (MoveSet.length>2) {
+    // check field
+    if (position1==position2 && position1==position3) {
+      alert(position1 + ' won')
+    } 
+    else if (position4==position5 && position4==position6) {
+      alert(position4 + ' won')
+    }
+    else if (position7==position8 && position7==position9) {
+      alert(position7 + ' won')
+    }
+    else if (position1==position4 && position1==position7) {
+      alert(position1 + ' won')
+    }
+    else if (position2==position5 && position2==position8) {
+      alert(position2 + ' won')
+    }
+    else if (position3==position6 && position3==position9) {
+      alert(position3 + ' won')
+    }
+    else if (position1==position5 && position1==position9) {
+      alert(position1 + ' won')
+    }
+    else if (position3==position5 && position3==position7) {
+      alert(position3 + ' won')
+    }
+  }
+}
 function fieldAction(id){
  let coor=id.split('').pop()
  let target= document.getElementById(id)
@@ -17,28 +66,18 @@ function fieldAction(id){
 if(target.innerHTML){
   alert('already made that move')
 }else{
-  // check field
-  if(!MoveSet.length || MoveSet.pop()=='O'){
-    Nextmove='X'
+    if(!MoveSet.length || MoveSet[MoveSet.length-1]=='O'){
+      Nextmove='X'
+    }
+    else{
+      Nextmove='O'
+    }
+    MoveSet.push(Nextmove)
+    target.innerHTML=Nextmove
+    checkGameState()
   }
-  else{
-    Nextmove='O'
   }
-  MoveSet.push(Nextmove)
-  target.innerHTML=Nextmove
-}
-  }
-onMounted(() => {
-  let position1=document.querySelector('#position1')
-  let position2=document.querySelector('#position2')
-  let position3=document.querySelector('#position3')
-  let position4=document.querySelector('#position4')
-  let position5=document.querySelector('#position5')
-  let position6=document.querySelector('#position6')
-  let position7=document.querySelector('#position7')
-  let position8=document.querySelector('#position8')
-  let position9=document.querySelector('#position9')
-document.querySelector('body').style=`
+onMounted(() => {document.querySelector('body').style=`
 background-color:${generateRandomColor()} ;
 `
 document.querySelector('.field').style=`
@@ -71,7 +110,6 @@ document.querySelectorAll('.definedPosition').forEach((position)=>{
 margin: 0;
 padding: 0;
 box-sizing: border-box;
-color: antiquewhite;
 }
 body{
   width: 100vw;
@@ -87,12 +125,14 @@ body{
   transform: translate(-50%,-50%);
 display: flex;
 flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-content: space-around;
+flex-wrap: wrap;
+justify-content: space-evenly;
+align-content: space-around;
 }
 .definedPosition{
   width: 8vw;
   aspect-ratio: 1;
+  color: antiquewhite;
+  font-size: 3em;
 }
 </style>
