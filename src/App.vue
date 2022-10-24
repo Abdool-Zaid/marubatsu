@@ -29,9 +29,8 @@ function checkGameState(){
       document.querySelector('#position8').innerHTML?position8=document.querySelector('#position8').innerHTML:Math.random()
   let position9 = Math.random()
       document.querySelector('#position9').innerHTML?position9=document.querySelector('#position9').innerHTML:Math.random()
-  if (MoveSet.length==9) {
-    alert('game ended in a draw')
-  } else if (MoveSet.length>2) {
+  
+   if (MoveSet.length>2) {
     // check field
     if (position1==position2 && position1==position3) {
       alert(position1 + ' won')
@@ -56,9 +55,13 @@ function checkGameState(){
     }
     else if (position3==position5 && position3==position7) {
       alert(position3 + ' won')
+    } else if (MoveSet.length== 9){
+      alert('game ended in a draw')
+
     }
   }
-}
+  }
+
 function fieldAction(id){
  let coor=id.split('').pop()
  let target= document.getElementById(id)
