@@ -30,12 +30,20 @@ getDocs(colref).then((snapshot) => {
 })
 
 const addGameInstance = document.querySelector('#addInstance')
-addGameInstance.addEventListener('submit', (e)=>{
+let Newpassword= document.querySelector('.Newpassword')
+let moveSet=[]
+addGameInstance.addEventListener('submit',async  (e)=>{
     e.preventDefault()
-addDoc(colref,{
-    moveSet:[],
-    password:'',
+    Newpassword=Newpassword.value
+    const docRef = await addDoc(collection(db, "gameInstance"), {
+        moveSet:moveSet,
+           password:Newpassword,
+      });
+      navigator.clipboard.writeText(docRef.id);
+alert('The Game ID has been copied to your clipboard')
 })
+.then(()=>{
+    addGameInstance.reset()
 })
 const endGameInstance = document.querySelector('#endInstance')
 addGameInstance.addEventListener('submit', (e)=>{

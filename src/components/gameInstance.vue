@@ -1,38 +1,53 @@
 <script setup>
-function returnGameID(){
-    navigator.clipboard.writeText('mlem');
-alert(`${'gameID'} has been copied to clipboard` )
+function returnGameID() {
+    let Newpassword= document.querySelector('.Newpassword')
+  navigator.clipboard.writeText("mlem");
+alert('Game ID has been copied to clipboard')
 }
-
 </script>
 
 <template>
-    <div id="enterInstance">
-        <form>
-  <div class="mb-3">
-    <label for="gameID" class="form-label">Game ID</label>
-    <input type="text" class="form-control" id="gameID" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <label for="existingGamePassword" class="form-label">Password</label>
-    <input type="password" class="form-control" id="existingGamePassword">
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-    </div>
-    <div id="addInstance">
-        <label for="inputPassword5" class="form-label">Password</label>
+  <div id="enterInstance">
+    <form>
+      <div class="mb-3">
+        <label for="gameID" class="form-label">Game ID</label>
         <input
-        type="password"
-        id="inputPassword5"
-        class="form-control"
-        aria-describedby="passwordHelpBlock"
+          type="text"
+          class="form-control"
+          id="gameID"
+          aria-describedby="emailHelp"
+          v-model="GameID"
         />
-        <div id="passwordHelpBlock" class="form-text">
-            share this with whom ever you wish to do battle with alongside the game ID
-        </div>
-        <button type="submit" class="btn" @click="returnGameID()"> start new game</button>
+        <div id="emailHelp" class="form-text">enter an existing game ID</div>
+      </div>
+      <div class="mb-3">
+        <label for="existingGamePassword" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="existingGamePassword"
+          v-model="Password"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  <form id="addInstance">
+    <label for="inputPassword5" class="form-label">Password</label>
+    <input
+      type="password"
+      id="inputPassword5"
+      class="form-control Newpassword"
+      aria-describedby="passwordHelpBlock"
+      v-model="Newpassword"
+    />
+    <div id="passwordHelpBlock" class="form-text">
+      share this with whom ever you wish to do battle with alongside the game ID
     </div>
+    <button type="submit" @click="returnGameID()" class="btn">
+      start new game
+      <!--  @click="returnGameID()" -->
+    </button>
+  </form>
 </template>
-<style></style>
+<style scoped></style>
