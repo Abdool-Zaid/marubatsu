@@ -1,5 +1,6 @@
-<script setup>
+<script setup >
 import { onMounted } from "vue";
+import gameInstance from './components/gameInstance.vue'
 function generateRandomColor() {
   let letters = "0123456789ABCDEF";
   let color = "#";
@@ -10,6 +11,12 @@ function generateRandomColor() {
   return color;
 }
 let MoveSet = [];
+function clearField(){
+  document.querySelectorAll('.definedPosition').forEach((component) => {
+    component.innerHTML=null 
+  });
+  MoveSet = []
+}
 function checkGameState() {
   let position1 = "this";
   document.querySelector("#position1").innerHTML
@@ -52,22 +59,31 @@ function checkGameState() {
     // check field
     if (position1 == position2 && position1 == position3) {
       alert(position1 + " won");
+      clearField()
     } else if (position4 == position5 && position4 == position6) {
       alert(position4 + " won");
+      clearField()
     } else if (position7 == position8 && position7 == position9) {
       alert(position7 + " won");
+      clearField()
     } else if (position1 == position4 && position1 == position7) {
       alert(position1 + " won");
+      clearField()
     } else if (position2 == position5 && position2 == position8) {
       alert(position2 + " won");
+      clearField()
     } else if (position3 == position6 && position3 == position9) {
       alert(position3 + " won");
+      clearField()
     } else if (position1 == position5 && position1 == position9) {
       alert(position1 + " won");
+      clearField()
     } else if (position3 == position5 && position3 == position7) {
       alert(position3 + " won");
+      clearField()
     } else if (MoveSet.length == 9) {
       alert("game ended in a draw");
+      clearField()
     }
   }
 }
@@ -121,21 +137,20 @@ background-color:${generateRandomColor()} ;
 
 <template>
   
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar ">
   <div class="container-fluid">
-    <a class="navbar-brand">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#gameSettings">
+          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#gameSettings">
   Game Settings
 </button>
         </li>
         <li class="nav-item">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#audioSettings">
+          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#audioSettings">
 Audio Settings</button>        </li>
       </ul>
     </div>
@@ -200,10 +215,11 @@ Audio Settings</button>        </li>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <gameInstance></gameInstance>  
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn ">Save changes</button>
       </div>
     </div>
   </div>
@@ -242,7 +258,12 @@ body {
   width: 100vw;
   height: 100vh ;
 }
-
+.navbar{
+  z-index: 2;
+  position: fixed;
+  top:0;
+  background-color: #45454500 !important;
+}
 .field {
   width: 30vw;
   aspect-ratio: 1;
