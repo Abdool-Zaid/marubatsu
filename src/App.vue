@@ -1,6 +1,6 @@
-<script setup >
+<script setup>
 import { onMounted } from "vue";
-import gameInstance from './components/gameInstance.vue'
+import gameInstance from "./components/gameInstance.vue";
 function generateRandomColor() {
   let letters = "0123456789ABCDEF";
   let color = "#";
@@ -11,11 +11,11 @@ function generateRandomColor() {
   return color;
 }
 let MoveSet = [];
-function clearField(){
-  document.querySelectorAll('.definedPosition').forEach((component) => {
-    component.innerHTML=null 
+function clearField() {
+  document.querySelectorAll(".definedPosition").forEach((component) => {
+    component.innerHTML = null;
   });
-  MoveSet = []
+  MoveSet = [];
 }
 function checkGameState() {
   let position1 = "this";
@@ -59,31 +59,31 @@ function checkGameState() {
     // check field
     if (position1 == position2 && position1 == position3) {
       alert(position1 + " won");
-      clearField()
+      clearField();
     } else if (position4 == position5 && position4 == position6) {
       alert(position4 + " won");
-      clearField()
+      clearField();
     } else if (position7 == position8 && position7 == position9) {
       alert(position7 + " won");
-      clearField()
+      clearField();
     } else if (position1 == position4 && position1 == position7) {
       alert(position1 + " won");
-      clearField()
+      clearField();
     } else if (position2 == position5 && position2 == position8) {
       alert(position2 + " won");
-      clearField()
+      clearField();
     } else if (position3 == position6 && position3 == position9) {
       alert(position3 + " won");
-      clearField()
+      clearField();
     } else if (position1 == position5 && position1 == position9) {
       alert(position1 + " won");
-      clearField()
+      clearField();
     } else if (position3 == position5 && position3 == position7) {
       alert(position3 + " won");
-      clearField()
+      clearField();
     } else if (MoveSet.length == 9) {
       alert("game ended in a draw");
-      clearField()
+      clearField();
     }
   }
 }
@@ -111,7 +111,7 @@ onMounted(() => {
   // background-color:${generateRandomColor()} !important ;
   // `;
   // });
-    document.querySelector("body").style = `
+  document.querySelector("body").style = `
   background-color:${generateRandomColor()} ;
 `;
   document.querySelector(".field").style = `
@@ -127,37 +127,58 @@ background-color:${generateRandomColor()} ;
   background-color:${generateRandomColor()} !important ;
   `;
   });
-  navigator.mediaDevices.getUserMedia({
-      audio:true, 
-    }).then(stream=>{
-      document.querySelector('#OreNo').srcObject=stream
-      })
+  navigator.mediaDevices
+    .getUserMedia({
+      audio: true,
+    })
+    .then((stream) => {
+      document.querySelector("#OreNo").srcObject = stream;
+    });
 });
 </script>
 
 <template>
-  
-  <nav class="navbar ">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#gameSettings">
-  Game Settings
-</button>
-        </li>
-        <li class="nav-item">
-          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#audioSettings">
-Audio Settings</button>        </li>
-      </ul>
+  <nav class="navbar">
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <button
+              type="button"
+              class="btn"
+              data-bs-toggle="modal"
+              data-bs-target="#gameSettings"
+            >
+              Game Settings
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              type="button"
+              class="btn"
+              data-bs-toggle="modal"
+              data-bs-target="#audioSettings"
+            >
+              Audio Settings
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<div class="field">
+  <div class="field">
     <div
       class="definedPosition text-center"
       @click="fieldAction('position1')"
@@ -204,48 +225,84 @@ Audio Settings</button>        </li>
       id="position9"
     ></div>
   </div>
- 
 
-<!-- Modals -->
-<div class="modal fade" id="gameSettings" tabindex="-1" aria-labelledby="gameSettingsLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="gameSettingsLabel"> Game Settings</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <gameInstance></gameInstance>  
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn ">Save changes</button>
+  <!-- Modals -->
+  <div
+    class="modal fade"
+    id="gameSettings"
+    tabindex="-1"
+    aria-labelledby="gameSettingsLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="gameSettingsLabel">Game Settings</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <gameInstance></gameInstance>
+        </div>
+        <div class="modal-footer">
+          <button id="endInstance" type="button" class="btn" >
+            end current game
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn">Save changes</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="modal fade" id="audioSettings" tabindex="-1" aria-labelledby="audioSettingsLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="audioSettingsLabel">Audio Settings</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
+  <div
+    class="modal fade"
+    id="audioSettings"
+    tabindex="-1"
+    aria-labelledby="audioSettingsLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="audioSettingsLabel">Audio Settings</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
           <div id="chatBox" class="d-flex flex-column">
             <audio controls autoplay></audio>
             <label for="OreNo">my audio</label>
             <audio controls autoplay id="OreNo"></audio>
           </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="fade"></div>
+  <div class="fade"></div>
 </template>
 
 <style>
@@ -256,12 +313,12 @@ Audio Settings</button>        </li>
 }
 body {
   width: 100vw;
-  height: 100vh ;
+  height: 100vh;
 }
-.navbar{
+.navbar {
   z-index: 2;
   position: fixed;
-  top:0;
+  top: 0;
   background-color: #45454500 !important;
 }
 .field {
@@ -283,8 +340,8 @@ body {
   color: antiquewhite;
   font-size: 3em;
 }
-.modal-content{
-    background-color: #45454500;
-    border: 0px;
+.modal-content {
+  background-color: #45454500;
+  border: 0px;
 }
 </style>

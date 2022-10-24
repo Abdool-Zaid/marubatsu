@@ -5,7 +5,7 @@ import "./assets/main.css";
 createApp(App).mount("#app");
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc,doc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDJmo_in6gzgYIqAkWXbebYh9Oh9XDp8Do",
@@ -23,7 +23,6 @@ getDocs(colref).then((snapshot) => {
     snapshot.docs.forEach((doc)=>{
         gameInstance.push({...doc.data(), id:doc.id})
     })
-    console.table(gameInstance)
 })
 .catch(error=>{
     console.error(error.message)
@@ -40,14 +39,21 @@ addGameInstance.addEventListener('submit',async  (e)=>{
            password:Newpassword,
       });
       navigator.clipboard.writeText(docRef.id);
+      localStorage.setItem('gameID',docRef.id )
 alert('The Game ID has been copied to your clipboard')
 })
 .then(()=>{
     addGameInstance.reset()
 })
-const endGameInstance = document.querySelector('#endInstance')
-addGameInstance.addEventListener('submit', (e)=>{
-    e.preventDefault()
+document.querySelector('#endInstance').addEventListener("click", (e)=>{
+console.log('clicked')
+    //     e.preventDefault()
+//     const docRef=doc(db, 'gameInstance',JSON.parse(localStorage.gameID) )
+//     deleteDoc(docRef)
+// .then(()=>{
+//     console.log(`deleted game no: ${JSON.parse(localStorage.gameID)}`)
+//     localStorage.clear()
+// })
 })
 
 const express = require("express");

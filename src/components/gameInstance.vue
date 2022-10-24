@@ -1,9 +1,5 @@
 <script setup>
-function returnGameID() {
-    let Newpassword= document.querySelector('.Newpassword')
-  navigator.clipboard.writeText("mlem");
-alert('Game ID has been copied to clipboard')
-}
+
 </script>
 
 <template>
@@ -44,9 +40,8 @@ alert('Game ID has been copied to clipboard')
     <div id="passwordHelpBlock" class="form-text">
       share this with whom ever you wish to do battle with alongside the game ID
     </div>
-    <button type="submit" @click="returnGameID()" class="btn">
+    <button type="submit" class="btn">
       start new game
-      <!--  @click="returnGameID()" -->
     </button>
   </form>
 </template>
