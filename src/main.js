@@ -6,15 +6,31 @@ createApp(App).mount("#app");
 
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, onSnapshot, addDoc, deleteDoc,doc } from "firebase/firestore";
-const watcher = storageWatcher;
-watcher.configue({
-  verbose: true, // (Bool) Default: true
-  duration: 1000, // (Integer) Default: 1500
-  logType: 'warn' // (String) Default: 'info'
-})
-watcher.start();
-console.log(watcher)
-
+let gameDuration=false
+let curentState
+let comparatorValue
+let compareState= ()=>{
+   comparatorValue=lengthDetector()
+}
+let lengthDetector=()=>{
+  if (gameDuration!==curentState){
+    curentState=gameDuration
+    return gameDuration
+  }
+  else{
+    compareState()
+  }
+}
+let checkGameState= ()=>{
+  localStorage.MoveSet? gameDuration= localStorage.MoveSet:curentState=true
+  if (!curentState){
+    lengthDetector()  
+  }else{
+  curentState=gameDuration
+}
+setTimeout(checkGameState(),500)
+}
+// checkGameState()
 const firebaseConfig = {
   apiKey: "AIzaSyDJmo_in6gzgYIqAkWXbebYh9Oh9XDp8Do",
   authDomain: "test-402f3.firebaseapp.com",
