@@ -10,6 +10,7 @@ function generateRandomColor() {
   }
   return color;
 }
+
 let MoveSet = [];
 function clearField() {
   document.querySelectorAll(".definedPosition").forEach((component) => {
@@ -111,6 +112,22 @@ onMounted(() => {
   // background-color:${generateRandomColor()} !important ;
   // `;
   // });
+  function styling(){
+    console.log(`running ${Math.random()}`)
+    document.querySelectorAll('.definedPosition').forEach((move)=>{
+      move.animate([
+  // keyframes
+  {  color:generateRandomColor() },
+  {  color:generateRandomColor() }
+], {
+  // timing options
+  duration: 1000,
+  iterations: Infinity
+});
+    })
+setTimeout(styling(), 10000)
+}
+// styling()
   document.querySelector("body").style = `
   background-color:${generateRandomColor()} ;
 `;
@@ -249,7 +266,7 @@ background-color:${generateRandomColor()} ;
           <gameInstance></gameInstance>
         </div>
         <div class="modal-footer">
-          <button id="endInstance" type="button" class="btn" >
+          <button id="endInstance"  @click="console.log('app.vue')" class="btn" >
             end current game
           </button>
           <button
@@ -337,11 +354,13 @@ body {
 .definedPosition {
   width: 8vw;
   aspect-ratio: 1;
-  color: antiquewhite;
+  animation: animatename 1s linear infinite;
   font-size: 3em;
 }
 .modal-content {
   background-color: #45454500;
   border: 0px;
 }
+
+
 </style>

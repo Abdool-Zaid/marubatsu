@@ -5,7 +5,7 @@ import "./assets/main.css";
 createApp(App).mount("#app");
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, addDoc, deleteDoc,doc } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot, addDoc, deleteDoc,doc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDJmo_in6gzgYIqAkWXbebYh9Oh9XDp8Do",
@@ -18,14 +18,14 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 const db = getFirestore();
 const colref = collection(db, "gameInstance");
-getDocs(colref).then((snapshot) => {
-    let gameInstance= []
-    snapshot.docs.forEach((doc)=>{
-        gameInstance.push({...doc.data(), id:doc.id})
+
+
+onSnapshot(colref, (snapshot)=>{
+  let gameInstance= []
+  snapshot.docs.forEach((doc)=>{
+      gameInstance.push({...doc.data(), id:doc.id})
+  console.table(gameInstance)
     })
-})
-.catch(error=>{
-    console.error(error.message)
 })
 
 const addGameInstance = document.querySelector('#addInstance')
@@ -37,14 +37,14 @@ addGameInstance.addEventListener('submit',async  (e)=>{
     const docRef = await addDoc(collection(db, "gameInstance"), {
         moveSet:moveSet,
            password:Newpassword,
-      });
+      }).then(()=>{
+        addGameInstance.reset()
+    })
       navigator.clipboard.writeText(docRef.id);
       localStorage.setItem('gameID',docRef.id )
 alert('The Game ID has been copied to your clipboard')
 })
-.then(()=>{
-    addGameInstance.reset()
-})
+
 document.querySelector('#endInstance').addEventListener("click", (e)=>{
 console.log('clicked')
     //     e.preventDefault()
@@ -56,21 +56,21 @@ console.log('clicked')
 // })
 })
 
-const express = require("express");
-const app = express();
-const http = require("http");
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+// const express = require("express");
+// const app = express();
+// const http = require("http");
+// const server = http.createServer(app);
+// const { Server } = require("socket.io");
+// const io = new Server(server);
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(__dirname + "/index.html");
+// });
 
-io.on("connection", (socket) => {
-  console.log("a user connected");
-});
+// io.on("connection", (socket) => {
+//   console.log("a user connected");
+// });
 
-server.listen(3000, () => {
-  console.log("listening on *:3000");
-});
+// server.listen(3000, () => {
+//   console.log("listening on *:3000");
+// });
