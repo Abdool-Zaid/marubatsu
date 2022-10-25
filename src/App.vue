@@ -103,6 +103,7 @@ function fieldAction(id) {
     }
     MoveSet.push({ move: Nextmove, position: id });
     localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
+    
     target.innerHTML = Nextmove;
     checkGameState();
   }
