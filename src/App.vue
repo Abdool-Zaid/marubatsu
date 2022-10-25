@@ -102,6 +102,7 @@ function fieldAction(id) {
       Nextmove = "O";
     }
     MoveSet.push({ move: Nextmove, position: id });
+    localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
     target.innerHTML = Nextmove;
     checkGameState();
   }
@@ -266,7 +267,7 @@ background-color:${generateRandomColor()} ;
           <gameInstance></gameInstance>
         </div>
         <div class="modal-footer">
-          <button id="endInstance"  @click="console.log('app.vue')" class="btn" >
+          <button id="endInstance"   class="btn" >
             end current game
           </button>
           <button

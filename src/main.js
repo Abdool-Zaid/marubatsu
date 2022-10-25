@@ -6,6 +6,14 @@ createApp(App).mount("#app");
 
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, onSnapshot, addDoc, deleteDoc,doc } from "firebase/firestore";
+const watcher = storageWatcher;
+watcher.configue({
+  verbose: true, // (Bool) Default: true
+  duration: 1000, // (Integer) Default: 1500
+  logType: 'warn' // (String) Default: 'info'
+})
+watcher.start();
+console.log(watcher)
 
 const firebaseConfig = {
   apiKey: "AIzaSyDJmo_in6gzgYIqAkWXbebYh9Oh9XDp8Do",
@@ -24,7 +32,8 @@ onSnapshot(colref, (snapshot)=>{
   let gameInstance= []
   snapshot.docs.forEach((doc)=>{
       gameInstance.push({...doc.data(), id:doc.id})
-  console.table(gameInstance)
+      console.table(gameInstance)
+      // send moveset here
     })
 })
 
@@ -34,27 +43,28 @@ let moveSet=[]
 addGameInstance.addEventListener('submit',async  (e)=>{
     e.preventDefault()
     Newpassword=Newpassword.value
+    console.log(Newpassword)
     const docRef = await addDoc(collection(db, "gameInstance"), {
         moveSet:moveSet,
            password:Newpassword,
-      }).then(()=>{
-        addGameInstance.reset()
-    })
+      })
       navigator.clipboard.writeText(docRef.id);
-      localStorage.setItem('gameID',docRef.id )
-alert('The Game ID has been copied to your clipboard')
+      localStorage.setItem('gameID',JSON.stringify(docRef.id)  )
+      alert('The Game ID has been copied to your clipboard')
 })
 
 document.querySelector('#endInstance').addEventListener("click", (e)=>{
-console.log('clicked')
-    //     e.preventDefault()
-//     const docRef=doc(db, 'gameInstance',JSON.parse(localStorage.gameID) )
-//     deleteDoc(docRef)
-// .then(()=>{
-//     console.log(`deleted game no: ${JSON.parse(localStorage.gameID)}`)
-//     localStorage.clear()
-// })
+        e.preventDefault()
+    const docRef=doc(db, 'gameInstance',JSON.parse(localStorage.gameID) )
+    deleteDoc(docRef)
+.then(()=>{
+    alert(`deleted game no: ${JSON.parse(localStorage.gameID)}`)
+    localStorage.clear()
 })
+})
+window.addEventListener('storage', () => {
+  console.log('localstorage changed');
+});
 
 // const express = require("express");
 // const app = express();
