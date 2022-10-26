@@ -21,23 +21,34 @@ if(localStorage.MoveSet){
 let lastMove
 MoveSet.length>1? lastMove=MoveSet[MoveSet.length-1]:null
 let writeMoveData=()=>{
+  // console.table(MoveSet)
   if(MoveSet.length){
     if(shouldWriteDom){
-      
-// writeDOM
+for(let i=0;i<MoveSet.length;i++){
+  document.querySelector(`#${MoveSet[i].position}`).innerHTML=`
+  ${MoveSet[i].move}
+  `
+}
+shouldWriteDom=!shouldWriteDom
     }
 // localStorage.setItem('lastMove',JSON.stringify(lastMove))
   }
 setTimeout(()=>writeMoveData(),1000)
 }
-writeMoveData()
 function clearField() {
   document.querySelectorAll(".definedPosition").forEach((component) => {
     component.innerHTML = null;
   });
   MoveSet = [];
+  localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
+  
 }
-function checkGameState() {
+function checkGameState(id) {
+  let target = document.getElementById(id);
+  target.innerHTML = Nextmove;
+  localStorage.setItem('setMove','true')
+    localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
+    shouldWriteDom=true
   let position1 = "this";
   document.querySelector("#position1").innerHTML
     ? (position1 = document.querySelector("#position1").innerHTML)
@@ -74,8 +85,7 @@ function checkGameState() {
   document.querySelector("#position9").innerHTML
     ? (position9 = document.querySelector("#position9").innerHTML)
     : "words";
-
-  if (MoveSet.length > 2) {
+  if (MoveSet.length > 3) {
     // check field
     if (position1 == position2 && position1 == position3) {
       alert(position1 + " won");
@@ -107,11 +117,10 @@ function checkGameState() {
     }
   }
 }
+let Nextmove;
 
 function fieldAction(id) {
-  let coor = id.split("").pop();
   let target = document.getElementById(id);
-  let Nextmove;
   if (target.innerHTML) {
     alert("already made that move");
   } else {
@@ -121,14 +130,11 @@ function fieldAction(id) {
       Nextmove = "O";
     }
     MoveSet.push({ move: Nextmove, position: id });
-    localStorage.setItem('setMove','true')
-    localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
-    shouldWriteDom=true
-    target.innerHTML = Nextmove;
-    checkGameState();
+    checkGameState(id);
   }
 }
 onMounted(() => {
+  writeMoveData()
   // document.querySelectorAll('*').forEach((component) => {
   //   component.style = `
   // background-color:${generateRandomColor()} !important ;

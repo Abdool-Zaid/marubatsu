@@ -33,7 +33,7 @@ let initiateGame=()=>{
           v-model="Password"
         />
       </div>
-      <button type="submit" class="btn btn-primary" @click.prevent="initiateGame()">Submit</button>
+      <button type="submit" class="btn btn-primary" id="initiateGame"  @click.prevent="initiateGame()">Submit</button>
     </form>
   </div>
   <form id="addInstance">
