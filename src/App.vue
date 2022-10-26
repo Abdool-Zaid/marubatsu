@@ -356,7 +356,8 @@ body {
 .definedPosition {
   width: 8vw;
   aspect-ratio: 1;
-  animation: animatename 1s linear infinite;
+color: antiquewhite;
+text-shadow: grey;
   font-size: 3em;
 }
 .modal-content {

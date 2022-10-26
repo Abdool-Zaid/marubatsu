@@ -24,7 +24,7 @@ let lengthDetector=()=>{
 let checkGameState= ()=>{
   localStorage.MoveSet? gameDuration= localStorage.MoveSet:curentState=true
   if (!curentState){
-    compareState=gameDuration
+    comparatorValue=gameDuration
     lengthDetector()  
   }else if (curentState){
   curentState=gameDuration
