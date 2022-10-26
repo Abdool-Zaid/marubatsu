@@ -3,6 +3,11 @@ function togglePassword(id){
   let toggledPassword =document.querySelector(`#${id}`)
   toggledPassword.type=="password"?toggledPassword.type="text":toggledPassword.type="password"
 }
+let initiateGame=()=>{
+  localStorage.setItem('gamePassword',JSON.stringify( existingGamePassword.value))
+  localStorage.setItem('gameID',JSON.stringify(gameID.value))
+  localStorage.setItem('initiateGame','true')
+}  
 </script>
 
 <template>
@@ -28,7 +33,7 @@ function togglePassword(id){
           v-model="Password"
         />
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary" @click.prevent="initiateGame()">Submit</button>
     </form>
   </div>
   <form id="addInstance">

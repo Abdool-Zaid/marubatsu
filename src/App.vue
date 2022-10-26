@@ -10,8 +10,27 @@ function generateRandomColor() {
   }
   return color;
 }
-
-let MoveSet = [];
+// enteredGame
+let MoveSet ;
+let shouldWriteDom=true
+if(localStorage.MoveSet){
+  MoveSet=JSON.parse(localStorage.MoveSet)
+}else{
+  MoveSet=[]
+}
+let lastMove
+MoveSet.length>1? lastMove=MoveSet[MoveSet.length-1]:null
+let writeMoveData=()=>{
+  if(MoveSet.length){
+    if(shouldWriteDom){
+      
+// writeDOM
+    }
+// localStorage.setItem('lastMove',JSON.stringify(lastMove))
+  }
+setTimeout(()=>writeMoveData(),1000)
+}
+writeMoveData()
 function clearField() {
   document.querySelectorAll(".definedPosition").forEach((component) => {
     component.innerHTML = null;
@@ -102,8 +121,9 @@ function fieldAction(id) {
       Nextmove = "O";
     }
     MoveSet.push({ move: Nextmove, position: id });
+    localStorage.setItem('setMove','true')
     localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
-    
+    shouldWriteDom=true
     target.innerHTML = Nextmove;
     checkGameState();
   }
