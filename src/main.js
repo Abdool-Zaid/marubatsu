@@ -102,7 +102,6 @@ let updateField= document.querySelectorAll('.definedPosition').forEach((field)=>
 
   field.addEventListener("click", () => {
     let gameID = JSON.parse(localStorage.gameID);
-    let gamePassword = JSON.parse(localStorage.gamePassword);
     const docRef = doc(db, "gameInstance", gameID);
     updateDoc(docRef,{moveSet:JSON.parse(localStorage.MoveSet)})    
     })
