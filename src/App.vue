@@ -11,39 +11,39 @@ function generateRandomColor() {
   return color;
 }
 // enteredGame
-let checkDom =false
-localStorage.setItem('checkDom',JSON.stringify(checkDom))
-let MoveSet ;
-let shouldWriteDom=true
-if(localStorage.MoveSet){
-  MoveSet=JSON.parse(localStorage.MoveSet)
-}else{
-  MoveSet=[]
+let checkDom = false;
+localStorage.setItem("checkDom", JSON.stringify(checkDom));
+let MoveSet;
+let shouldWriteDom = true;
+if (localStorage.MoveSet) {
+  MoveSet = JSON.parse(localStorage.MoveSet);
+} else {
+  MoveSet = [];
 }
-let lastMove
-MoveSet.length>1? lastMove=MoveSet[MoveSet.length-1]:null
-let writeMoveData=()=>{
+let lastMove;
+MoveSet.length > 1 ? (lastMove = MoveSet[MoveSet.length - 1]) : null;
+let writeMoveData = () => {
   // console.table(MoveSet)
-  if(MoveSet.length){
-    if(shouldWriteDom){
-for(let i=0;i<MoveSet.length;i++){
-  document.querySelector(`#${MoveSet[i].position}`).innerHTML=`
+  if (MoveSet.length) {
+    if (shouldWriteDom) {
+      for (let i = 0; i < MoveSet.length; i++) {
+        document.querySelector(`#${MoveSet[i].position}`).innerHTML = `
   ${MoveSet[i].move}
-  `
-}
-shouldWriteDom=!shouldWriteDom
+  `;
+      }
+      shouldWriteDom = !shouldWriteDom;
     }
   }
-setTimeout(()=>writeMoveData(),1000)
-}
+  setTimeout(() => writeMoveData(), 1000);
+};
 function clearField() {
   document.querySelectorAll(".definedPosition").forEach((component) => {
     component.innerHTML = null;
   });
   MoveSet = [];
-  localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
+  localStorage.setItem("MoveSet", JSON.stringify(MoveSet));
 }
-function CheckDom(){
+function CheckDom() {
   let position1 = "this";
   document.querySelector("#position1").innerHTML
     ? (position1 = document.querySelector("#position1").innerHTML)
@@ -80,7 +80,7 @@ function CheckDom(){
   document.querySelector("#position9").innerHTML
     ? (position9 = document.querySelector("#position9").innerHTML)
     : "words";
-    console.table(MoveSet)
+  console.table(MoveSet);
   if (MoveSet.length > 3) {
     // check field
     if (position1 == position2 && position1 == position3) {
@@ -108,22 +108,26 @@ function CheckDom(){
       alert(position3 + " won");
       clearField();
     } else if (MoveSet.length == 9) {
-      alert("game ended in a draw");
-      clearField();
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+      sleep(2000).then(() => {
+        alert("game ended in a draw");
+        clearField();
+      });
     }
   }
-  localStorage.setItem('checkDom','false')
+  localStorage.setItem("checkDom", "false");
 }
 
 function checkGameState(id) {
   let target = document.getElementById(id);
   target.innerHTML = Nextmove;
-  localStorage.setItem('setMove','true')
-    localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
-    shouldWriteDom=true
-    CheckDom()
+  localStorage.setItem("setMove", "true");
+  localStorage.setItem("MoveSet", JSON.stringify(MoveSet));
+  shouldWriteDom = true;
+  CheckDom();
 }
-
 
 let Nextmove;
 
@@ -132,7 +136,7 @@ function fieldAction(id) {
   if (target.innerHTML) {
     alert("already made that move");
   } else {
-     MoveSet= JSON.parse(localStorage.MoveSet)
+    MoveSet = JSON.parse(localStorage.MoveSet);
     if (!MoveSet.length || MoveSet[MoveSet.length - 1].move == "O") {
       Nextmove = "X";
     } else {
@@ -143,24 +147,26 @@ function fieldAction(id) {
   }
 }
 onMounted(() => {
-
-  writeMoveData()
-  function styling(){
-    console.log(`running ${Math.random()}`)
-    document.querySelectorAll('.definedPosition').forEach((move)=>{
-      move.animate([
-  // keyframes
-  {  color:generateRandomColor() },
-  {  color:generateRandomColor() }
-], {
-  // timing options
-  duration: 1000,
-  iterations: Infinity
-});
-    })
-setTimeout(styling(), 10000)
-}
-// styling()
+  writeMoveData();
+  function styling() {
+    console.log(`running ${Math.random()}`);
+    document.querySelectorAll(".definedPosition").forEach((move) => {
+      move.animate(
+        [
+          // keyframes
+          { color: generateRandomColor() },
+          { color: generateRandomColor() },
+        ],
+        {
+          // timing options
+          duration: 1000,
+          iterations: Infinity,
+        }
+      );
+    });
+    setTimeout(styling(), 10000);
+  }
+  // styling()
   document.querySelector("body").style = `
   background-color:${generateRandomColor()} ;
 `;
@@ -184,14 +190,14 @@ background-color:${generateRandomColor()} ;
     .then((stream) => {
       document.querySelector("#OreNo").srcObject = stream;
     });
-    function mainListner(){
-if(localStorage.checkDom=='true'){
-  console.log('checked DOM')
-  CheckDom()
-}
-      setTimeout(()=> mainListner(), 1000)
-}
-mainListner()
+  function mainListner() {
+    if (localStorage.checkDom == "true") {
+      console.log("checked DOM");
+      CheckDom();
+    }
+    setTimeout(() => mainListner(), 1000);
+  }
+  mainListner();
 });
 </script>
 
@@ -307,9 +313,7 @@ mainListner()
           <gameInstance></gameInstance>
         </div>
         <div class="modal-footer">
-          <button id="endInstance"   class="btn" >
-            end current game
-          </button>
+          <button id="endInstance" class="btn">end current game</button>
           <button
             type="button"
             class="btn btn-secondary"
@@ -395,14 +399,12 @@ body {
 .definedPosition {
   width: 8vw;
   aspect-ratio: 1;
-color: antiquewhite;
-text-shadow: grey;
+  color: antiquewhite;
+  text-shadow: grey;
   font-size: 3em;
 }
 .modal-content {
   background-color: #45454500;
   border: 0px;
 }
-
-
 </style>

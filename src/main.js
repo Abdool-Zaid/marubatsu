@@ -86,6 +86,13 @@ let startGame = document.querySelector("#initiateGame");
       }
       localStorage.setItem('MoveSet', JSON.stringify(doc.data().moveSet))
       localStorage.setItem('checkDom','true')
+    if(doc.data().moveSet.length==9){
+      alert("game ended in a draw");
+    }
+    
+    
+
+    
     });
   });
 
