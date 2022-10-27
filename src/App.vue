@@ -11,6 +11,8 @@ function generateRandomColor() {
   return color;
 }
 // enteredGame
+let checkDom =false
+localStorage.setItem('checkDom',JSON.stringify(checkDom))
 let MoveSet ;
 let shouldWriteDom=true
 if(localStorage.MoveSet){
@@ -31,7 +33,6 @@ for(let i=0;i<MoveSet.length;i++){
 }
 shouldWriteDom=!shouldWriteDom
     }
-// localStorage.setItem('lastMove',JSON.stringify(lastMove))
   }
 setTimeout(()=>writeMoveData(),1000)
 }
@@ -41,14 +42,8 @@ function clearField() {
   });
   MoveSet = [];
   localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
-  
 }
-function checkGameState(id) {
-  let target = document.getElementById(id);
-  target.innerHTML = Nextmove;
-  localStorage.setItem('setMove','true')
-    localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
-    shouldWriteDom=true
+function CheckDom(){
   let position1 = "this";
   document.querySelector("#position1").innerHTML
     ? (position1 = document.querySelector("#position1").innerHTML)
@@ -116,7 +111,19 @@ function checkGameState(id) {
       clearField();
     }
   }
+  localStorage.setItem('checkDom','false')
 }
+
+function checkGameState(id) {
+  let target = document.getElementById(id);
+  target.innerHTML = Nextmove;
+  localStorage.setItem('setMove','true')
+    localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
+    shouldWriteDom=true
+    CheckDom()
+}
+
+
 let Nextmove;
 
 function fieldAction(id) {
@@ -134,12 +141,8 @@ function fieldAction(id) {
   }
 }
 onMounted(() => {
+
   writeMoveData()
-  // document.querySelectorAll('*').forEach((component) => {
-  //   component.style = `
-  // background-color:${generateRandomColor()} !important ;
-  // `;
-  // });
   function styling(){
     console.log(`running ${Math.random()}`)
     document.querySelectorAll('.definedPosition').forEach((move)=>{
@@ -179,6 +182,14 @@ background-color:${generateRandomColor()} ;
     .then((stream) => {
       document.querySelector("#OreNo").srcObject = stream;
     });
+    function mainListner(){
+if(localStorage.checkDom=='true'){
+  console.log('checked DOM')
+  CheckDom()
+}
+      setTimeout(()=> mainListner(), 1000)
+}
+mainListner()
 });
 </script>
 
