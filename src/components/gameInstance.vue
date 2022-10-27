@@ -14,7 +14,7 @@ let initiateGame=()=>{
   <div id="enterInstance">
     <form>
       <div class="mb-3">
-        <label for="gameID" class="form-label">Game ID</label>
+        <label for="gameID" class="form-label" id="appendID">Game ID</label>
         <input
           type="text"
           class="form-control"

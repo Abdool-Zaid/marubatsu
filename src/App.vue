@@ -23,7 +23,6 @@ if (localStorage.MoveSet) {
 let lastMove;
 MoveSet.length > 1 ? (lastMove = MoveSet[MoveSet.length - 1]) : null;
 let writeMoveData = () => {
-  // console.table(MoveSet)
   if (MoveSet.length) {
     if (shouldWriteDom) {
       for (let i = 0; i < MoveSet.length; i++) {
@@ -37,13 +36,19 @@ let writeMoveData = () => {
   setTimeout(() => writeMoveData(), 1000);
 };
 function clearField() {
-  document.querySelectorAll(".definedPosition").forEach((component) => {
-    component.innerHTML = null;
+  function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+      sleep(2000).then(() => {
+        document.querySelectorAll(".definedPosition").forEach((component) => {
+          component.innerHTML = null;
+          MoveSet = [];
+          localStorage.setItem("MoveSet", JSON.stringify(MoveSet));
+      });
   });
-  MoveSet = [];
-  localStorage.setItem("MoveSet", JSON.stringify(MoveSet));
 }
 function CheckDom() {
+  let arr=JSON.parse(localStorage.MoveSet).length
   let position1 = "this";
   document.querySelector("#position1").innerHTML
     ? (position1 = document.querySelector("#position1").innerHTML)
@@ -80,7 +85,6 @@ function CheckDom() {
   document.querySelector("#position9").innerHTML
     ? (position9 = document.querySelector("#position9").innerHTML)
     : "words";
-  console.table(MoveSet);
   if (MoveSet.length > 3) {
     // check field
     if (position1 == position2 && position1 == position3) {
@@ -107,14 +111,10 @@ function CheckDom() {
     } else if (position3 == position5 && position3 == position7) {
       alert(position3 + " won");
       clearField();
-    } else if (MoveSet.length == 9) {
-      function sleep(ms) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-      }
-      sleep(2000).then(() => {
+    } else if (arr == 9) {
         alert("game ended in a draw");
         clearField();
-      });
+      
     }
   }
   localStorage.setItem("checkDom", "false");
@@ -134,6 +134,7 @@ let Nextmove;
 function fieldAction(id) {
   let target = document.getElementById(id);
   if (target.innerHTML) {
+    CheckDom();
     alert("already made that move");
   } else {
     MoveSet = JSON.parse(localStorage.MoveSet);
@@ -149,7 +150,6 @@ function fieldAction(id) {
 onMounted(() => {
   writeMoveData();
   function styling() {
-    console.log(`running ${Math.random()}`);
     document.querySelectorAll(".definedPosition").forEach((move) => {
       move.animate(
         [
@@ -192,7 +192,6 @@ background-color:${generateRandomColor()} ;
     });
   function mainListner() {
     if (localStorage.checkDom == "true") {
-      console.log("checked DOM");
       CheckDom();
     }
     setTimeout(() => mainListner(), 1000);

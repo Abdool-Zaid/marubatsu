@@ -38,7 +38,6 @@ addGameInstance.addEventListener("submit", async (e) => {
 
   
   Newpassword = Newpassword.value;
-  console.log(Newpassword);
   const docRef = await addDoc(collection(db, "gameInstance"), {
     moveSet: moveSet,
     password: Newpassword,
@@ -55,13 +54,13 @@ let startGame = document.querySelector("#initiateGame");
     let gameID = JSON.parse(localStorage.gameID);
     let gamePassword = JSON.parse(localStorage.gamePassword);
     const docuRef = doc(db, "gameInstance", gameID);
-    console.log("new game");
     getDoc(docuRef).then((doc) => {
+      document.querySelector('#appendID').innerHTML=`Game ID ${doc.id}`
   document.querySelectorAll(".definedPosition").forEach((component) => {
     component.innerHTML = null;
   });
   moveSet = [];
-  localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
+  localStorage.setItem('MoveSet',JSON.stringify(moveSet))
       if (doc.data().password == gamePassword) {
         localStorage.setItem("enteredGame", "true");
         let moveSet = doc.data().moveSet;
@@ -77,34 +76,24 @@ let startGame = document.querySelector("#initiateGame");
     });
     onSnapshot(docuRef, (doc) => {
       for (let i = 0; i < doc.data().moveSet.length; i++) {
+        localStorage.setItem('checkDom','true')
         document.querySelector(
           `#${doc.data().moveSet[i].position}`
         ).innerHTML = `
         ${doc.data().moveSet[i].move}
         `;
-        console.log(doc.data().moveSet[i].position);
       }
       localStorage.setItem('MoveSet', JSON.stringify(doc.data().moveSet))
-      localStorage.setItem('checkDom','true')
-    if(doc.data().moveSet.length==9){
-      alert("game ended in a draw");
-    }
-    
-    
-
-    
     });
   });
-
-
-
-let updateField = document
+document
   .querySelectorAll(".definedPosition")
   .forEach((field) => {
     field.addEventListener("click", () => {
       let gameID = JSON.parse(localStorage.gameID);
       const docRef = doc(db, "gameInstance", gameID);
       updateDoc(docRef, { moveSet: JSON.parse(localStorage.MoveSet) });
+
     });
   });
 
@@ -115,7 +104,6 @@ let checkGameState = () => {
   if (localStorage.initiateGame == "true") {
     localStorage.setItem("initiateGame", "false");
   }
-
 
   setTimeout(() => checkGameState(), 1000);
 };
