@@ -80,6 +80,7 @@ function CheckDom(){
   document.querySelector("#position9").innerHTML
     ? (position9 = document.querySelector("#position9").innerHTML)
     : "words";
+    console.table(MoveSet)
   if (MoveSet.length > 3) {
     // check field
     if (position1 == position2 && position1 == position3) {
@@ -131,6 +132,7 @@ function fieldAction(id) {
   if (target.innerHTML) {
     alert("already made that move");
   } else {
+     MoveSet= JSON.parse(localStorage.MoveSet)
     if (!MoveSet.length || MoveSet[MoveSet.length - 1].move == "O") {
       Nextmove = "X";
     } else {

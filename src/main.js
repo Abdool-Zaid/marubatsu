@@ -57,6 +57,11 @@ let startGame = document.querySelector("#initiateGame");
     const docuRef = doc(db, "gameInstance", gameID);
     console.log("new game");
     getDoc(docuRef).then((doc) => {
+  document.querySelectorAll(".definedPosition").forEach((component) => {
+    component.innerHTML = null;
+  });
+  moveSet = [];
+  localStorage.setItem('MoveSet',JSON.stringify(MoveSet))
       if (doc.data().password == gamePassword) {
         localStorage.setItem("enteredGame", "true");
         let moveSet = doc.data().moveSet;
@@ -79,6 +84,7 @@ let startGame = document.querySelector("#initiateGame");
         `;
         console.log(doc.data().moveSet[i].position);
       }
+      localStorage.setItem('MoveSet', JSON.stringify(doc.data().moveSet))
       localStorage.setItem('checkDom','true')
     });
   });
